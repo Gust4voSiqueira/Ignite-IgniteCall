@@ -92,7 +92,7 @@ export function ConfirmStep({
       </label>
 
       <label>
-        <Text size="sm">Endereço de e-mail</Text>
+        <Text size="sm">Observações</Text>
         <TextArea {...register('observations')} />
       </label>
 
