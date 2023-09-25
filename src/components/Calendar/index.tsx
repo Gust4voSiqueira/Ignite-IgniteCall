@@ -13,6 +13,7 @@ import {
   CalendarHeader,
   CalendarTitle,
 } from './styles'
+import { Loading } from '../Loading'
 
 interface CalendarWeek {
   week: number
@@ -142,6 +143,29 @@ export function Calendar({ onDateSelected }: CalendarProps) {
 
     return calendarWeeks
   }, [currentDate, blockedDates])
+
+  if (calendarWeeks.length === 0) {
+    return (
+      <CalendarContainer>
+        <CalendarHeader>
+          <CalendarTitle>
+            {currentMonth} <span>{currentYear}</span>
+          </CalendarTitle>
+
+          <CalendarActions>
+            <button onClick={handlePreviousMonth} title="Previous month">
+              <CaretLeft />
+            </button>
+            <button onClick={handleNextMonth} title="Next month">
+              <CaretRight />
+            </button>
+          </CalendarActions>
+        </CalendarHeader>
+
+        <Loading width="65px" height="65px" />
+      </CalendarContainer>
+    )
+  }
 
   return (
     <CalendarContainer>

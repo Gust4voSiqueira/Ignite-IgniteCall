@@ -1,6 +1,8 @@
 import { Calendar } from '@/components/Calendar'
 import {
+  CloseTab,
   Container,
+  LoadingContainer,
   TimePicker,
   TimePickerHeader,
   TimePickerItem,
@@ -11,6 +13,8 @@ import dayjs from 'dayjs'
 import { api } from '@/lib/axios'
 import { useRouter } from 'next/router'
 import { useQuery } from '@tanstack/react-query'
+import { X } from 'phosphor-react'
+import { Loading } from '@/components/Loading'
 
 interface Availability {
   possibleTimes: number[]
@@ -62,30 +66,60 @@ export function CalendarStep({ onSelectDateTime }: CalendarStepProps) {
     onSelectDateTime(dateWithTime)
   }
 
+  function onClearSelectedDate() {
+    setSelectedDate(null)
+  }
+
   return (
     <Container isTimePickerOpen={isDateSelected}>
       <Calendar onDateSelected={setSelectedDate} />
 
       {isDateSelected && (
-        <TimePicker>
-          <TimePickerHeader>
-            {weekDay}, <span>{describedDate}</span>
-          </TimePickerHeader>
+        <>
+          {/* <TimePicker>
+            <TimePickerHeader>
+              {weekDay}, <span>{describedDate}</span>
+            </TimePickerHeader>
 
-          <TimePickerList>
-            {availability?.possibleTimes.map((hour) => {
-              return (
-                <TimePickerItem
-                  key={hour}
-                  disabled={!availability.availabilityTimes.includes(hour)}
-                  onClick={() => handleSelectTime(hour)}
-                >
-                  {String(hour).padStart(2, '0')}:00h
-                </TimePickerItem>
-              )
-            })}
-          </TimePickerList>
-        </TimePicker>
+            <CloseTab onClick={onClearSelectedDate}>
+              <X size={20} />
+            </CloseTab>
+
+            <LoadingContainer>
+              <Loading width="48px" height="48px" />
+            </LoadingContainer>
+          </TimePicker> */}
+
+          <TimePicker>
+            <TimePickerHeader>
+              {weekDay}, <span>{describedDate}</span>
+            </TimePickerHeader>
+
+            <TimePickerList>
+              <CloseTab onClick={onClearSelectedDate}>
+                <X size={20} />
+              </CloseTab>
+
+              {!availability && (
+                <LoadingContainer>
+                  <Loading width="48px" height="48px" />
+                </LoadingContainer>
+              )}
+
+              {availability?.possibleTimes.map((hour) => {
+                return (
+                  <TimePickerItem
+                    key={hour}
+                    disabled={!availability.availabilityTimes.includes(hour)}
+                    onClick={() => handleSelectTime(hour)}
+                  >
+                    {String(hour).padStart(2, '0')}:00h
+                  </TimePickerItem>
+                )
+              })}
+            </TimePickerList>
+          </TimePicker>
+        </>
       )}
     </Container>
   )

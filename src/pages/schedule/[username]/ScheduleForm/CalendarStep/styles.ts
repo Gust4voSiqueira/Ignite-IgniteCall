@@ -24,6 +24,13 @@ export const Container = styled(Box, {
   },
 })
 
+export const LoadingContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '400px',
+})
+
 export const TimePicker = styled('div', {
   borderLeft: '1px solid $gray600',
   padding: '$6 $6 0',
@@ -77,6 +84,24 @@ export const TimePickerItem = styled('button', {
 
   '&:not(disabled):hover': {
     background: '$gray500',
+  },
+
+  '&:focus': {
+    boxShadow: '0 0 0 2px $colors$gray100',
+  },
+})
+
+export const CloseTab = styled('button', {
+  all: 'unset',
+
+  position: 'absolute',
+  top: 10,
+  right: 10,
+  background: 'transparent',
+
+  '&:hover': {
+    cursor: 'pointer',
+    background: '$gray700',
   },
 
   '&:focus': {
